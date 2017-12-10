@@ -1,0 +1,7 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="well well-lg">Are you sure you want to delete <b> {{ team_name }}</b>?</div>
+  <form action="{{ url_for('deleteTeam', team_name=team_name)}}" method='post'>
+    <input class="btn btn-danger" type="submit" value='Confirm Deletion'>
+  </form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</div>
+<div class="row">
+  <h2> {{team.name}}</h2>
+  <label for="">Description</label> <br>
+  {{team.description}}
+  <br>
+  country: {{country.name}}
+  <a href="{{ url_for('editTeam', team_name=team.name) }}"> Edit </a>
+  <a href="{{ url_for('deleteTeam', team_name=team.name) }}"> Delete </a>
+</div>
+{% endblock %}

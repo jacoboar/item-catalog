@@ -1,0 +1,51 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-4">
+      <h4>Countries</h4>
+      <div class="list-group">
+        {% for country in countries %}
+          <a class="list-group-item {{"active" if selected_country.name==country.name}}" href="{{ url_for('getTeams', country_name=country.name) }}" >{{ country.name }} </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h4>Teams for {{selected_country.name}} <span class="pull-right"><a href="{{ url_for('newTeam') }}"> Add Team </a></span></h4>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        {% for team in teams %}
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading{{team.id}}">
+              <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{team.id}}" aria-expanded="true" aria-controls="collapse{{team.id}}">
+                {{team.name}}
+              </a>
+              </h4>
+            </div>
+            <div id="collapse{{team.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{team.id}}">
+              <div class="panel-body">
+                <label for="">Description</label> <br>
+                {{team.description}} <br> <br>
+                <form action="{{ url_for('deleteTeam', team_name=team.name)}}" method='get'>
+                  <a class="btn btn-primary" href="{{ url_for('editTeam', team_name=team.name) }}"> Edit </a>
+                  <input class="btn btn-danger" type="submit" value='Delete'>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-warning" role="alert">
+        {% for message in messages %}
+          <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% endwith %}
+  </div>
+  <div id="result"></div>
+{% endblock %}

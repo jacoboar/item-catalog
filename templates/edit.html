@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-3 col-md-offset-1">
+      <h3>Edit Team</h3>
+      <form action="{{ url_for('editTeam', team_name=team.name)}}" method='post'>
+        <label for="name">Name:</label>
+        <input type="text" name='name' value="{{team.name}}"> <br>
+        <label for="description">Description:</label> <br>
+        <textarea name="description" rows="8" cols="40">{{team.description}}</textarea> <br>
+        <label for="country_id">Country:</label>
+        <select name="country_id">
+          {% for country_option in countries %}
+            <option value="{{country_option.id}}" {{"selected" if country_option.name==country.name}}>{{ country_option.name }}</option>
+          {% endfor %}
+        </select><br> <br>
+        <input class="btn btn-block btn-primary center" type='submit' value='Update'>
+      </form>
+    </div>
+  </div>
+  <div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-warning" role="alert">
+        {% for message in messages %}
+          <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+{% endblock %}
